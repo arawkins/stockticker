@@ -1,0 +1,4 @@
+node_modules
+public_html/images/site/*
+foundation
+public_html/cms/expressionengine/cache
