@@ -16,6 +16,6 @@ I don't actually recall how you would win the board game. I just remember endles
 
 ## How it's built
 
-(js/stockticker.js) is the basic game engine. It updates the stocks, tracks dividends, and responds to request to buy or sell shares. It's plain javascript, no React. This could in theory be placed on a server and could allow for multiplayer play without too much fuss. Perhaps another day!
+[stockticker.js](js/stockticker.js) is the basic game engine. It updates the stocks, tracks dividends, and responds to request to buy or sell shares. It's plain javascript, no React. This could in theory be placed on a server and could allow for multiplayer play without too much fuss. Perhaps another day!
 
-main.js is the React front end. It polls for stock data from the game engine and updates the view when stock prices change. It also updates a realtime log of events that are broadcasted from the game, and displays/updates the players cash and shares.
+[main.js](js/main.js) is the React front end. It polls for stock data from the game engine and updates the view when stock prices change. It also updates a realtime log of events that are broadcasted from the game, and displays/updates the players cash and shares.
