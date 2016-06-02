@@ -1,8 +1,10 @@
-### React Stock Ticker
+# React Stock Ticker
 
 React stock ticker is a basic re-creation of the classic board game Stock Ticker. I built it to get some hands on time with React and learn how React works.
 
 ## How to Play
+
+http://arawkins.github.io/stockticker/
 
 The rules of the game are pretty simple. Stock prices go up and down randomly, by 5, 10, or 15 dollars per share. If a stock is valued at $100 or more per share, it will sometimes pay you dividends. The more shares you own, the bigger the dividends you can earn.
 
