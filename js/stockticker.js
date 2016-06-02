@@ -3,6 +3,7 @@ var stockMarket = {
     stocks : [],
     newsFeed : [],
     cash : 0,
+    messageClearCounter:0,
 
     init: function () {
 
@@ -17,6 +18,7 @@ var stockMarket = {
 
         this.newsFeed = [];
         this.cash = 1000;
+        this.messageClearCounter = 0
     },
 
     broadcast:function (message) {
@@ -25,41 +27,51 @@ var stockMarket = {
 
     update: function() {
 
-        for(var i=0;i < this.stocks.length; i++) {
 
-            var thisStock = this.stocks[i];
-            var deltaPrice = 5;
+        var roll1 = Math.floor(Math.random() * 3 + 1); // action
+        var roll2 = Math.floor(Math.random() * 3 + 1) * 5; // amount
+        var roll3 = Math.floor(Math.random() * this.stocks.length); // stock choice
 
-            var roll1 = Math.floor(Math.random() * 3 + 1);
-            var roll2 = Math.floor(Math.random() * 3 + 1) * 5;
+        var affectedStock = this.stocks[roll3];
 
+        switch(roll1) {
 
-            if (Math.floor((Math.random() * 10) + 1) > 5)  {
-                deltaPrice *= -1;
+            case 1:
+            if (affectedStock.price >= 100 && affectedStock.shares > 0) {
+                var dividend = affectedStock.shares * roll2;
+                this.broadcast(affectedStock.name + " pays dividend of " + dividend);
+                this.cash += dividend;
             }
+            break;
 
-            thisStock.price += deltaPrice;
+            case 2:
+            affectedStock.price += roll2;
+            this.broadcast(affectedStock.name + " goes up " + roll2);
+            break;
 
-            if (thisStock.price >= 200) {
+            case 3:
+            affectedStock.price -= roll2;
+            this.broadcast(affectedStock.name + " goes down " + roll2);
+            break;
 
-                thisStock.shares *= 2;
-                thisStock.price = 100;
+        }
 
-                var splitEvent = new Event('stockSplit');
-                splitEvent.stockName = thisStock.name;
-                window.dispatchEvent(splitEvent);
+        if (affectedStock.price >= 200) {
 
-            } else if (thisStock.price <= 0) {
+            affectedStock.shares *= 2;
+            affectedStock.price = 100;
+            this.broadcast(affectedStock.name + " has split, shares have doubled!");
 
-                thisStock.shares = 0;
-                thisStock.price = 100;
+        } else if (affectedStock.price <= 0) {
 
-                var crashEvent = new Event('stockCrash');
-                splitEvent.stockName = thisStock.name;
-                window.dispatchEvent(crashEvent);
+            affectedStock.shares = 0;
+            affectedStock.price = 100;
+            this.broadcast(affectedStock.name + " has crashed, shares are gone :(");
 
-            }
+        }
 
+        if (this.newsFeed.length > 25) {
+            this.newsFeed.pop();
         }
     },
 
@@ -113,5 +125,4 @@ var stockMarket = {
 };
 
 stockMarket.init();
-stockMarket.broadcast("Welcome to React Stock Ticker!!!");
 stockMarket.interval = setInterval(function() { stockMarket.update()}, 2000);

@@ -20,7 +20,7 @@ var Stock = React.createClass({
 
             <article className="stock">
                 <h3>{this.props.name}</h3>
-                <p className="price">{this.props.price}</p>
+                <p className="price">${this.props.price} / share</p>
                 <button data-stock={this.props.name} className="buy" onClick={this.handleBuy}>Buy</button>
                 <button data-stock={this.props.name} className="sell" onClick={this.handleSell}>Sell</button>
             </article>
@@ -33,13 +33,9 @@ var Stock = React.createClass({
 var Shares = React.createClass({
 
     render: function() {
-
         return (
-
             <p className="share">Shares: {this.props.count}</p>
-
         );
-
     }
 
 });
@@ -47,32 +43,25 @@ var Shares = React.createClass({
 var NewsItem = React.createClass({
 
     render: function() {
-
         return (
-
             <article className="newsItem">{this.props.message}</article>
-
         )
     }
+
 })
 
 var NewsFeed = React.createClass({
 
-
-
     render: function () {
-
         var newsItems = this.props.data.map(function(item) {
-
             return (
                 <NewsItem message={item} />
             );
-
         }, this);
 
         return (
             <div className="newsFeed">
-                <h3>News</h3>
+                <h2>News</h2>
                 {newsItems}
             </div>
         )
@@ -84,7 +73,7 @@ var Cash = React.createClass({
 
     render: function() {
         return (
-            <p className="cash">Cash: {this.props.amount}</p>
+            <p className="cash">Cash: ${this.props.amount}</p>
         )
     }
 
@@ -105,33 +94,22 @@ var StockView = React.createClass({
     },
 
     updateStocks: function () {
-
-        this.setState({data: stockMarket.stocks});
-
-    },
-
-    onSplit: function(e) {
-        console.log("react heard an event");
-        console.log(e);
+        this.setState({data: stockMarket.stocks, cash:stockMarket.cash, newsFeed: stockMarket.newsFeed});
     },
 
     onBuy: function(stockName) {
-
         stockMarket.buyShare(stockName);
-        this.setState({data:stockMarket.stocks, cash:stockMarket.cash});
+        this.setState({data:stockMarket.stocks, cash:stockMarket.cash, newsFeed: stockMarket.newsFeed});
     },
 
     onSell: function(stockName) {
-
         stockMarket.sellShare(stockName);
-        this.setState({data:stockMarket.stocks, cash:stockMarket.cash});
+        this.setState({data:stockMarket.stocks, cash:stockMarket.cash, newsFeed: stockMarket.newsFeed});
     },
 
     componentDidMount() {
-
         this.updateStocks();
-        setInterval(this.updateStocks, 2000);
-
+        setInterval(this.updateStocks, 100);
     },
 
     render : function () {
@@ -150,13 +128,13 @@ var StockView = React.createClass({
         return (
 
             <div id="game">
+            <h1>React Stock Ticker</h1>
+            <Cash amount={this.state.cash} />
+
             <div className="stocks">
                 <h2>Stocks</h2>
                 {stockNodes}
             </div>
-
-
-            <Cash amount={this.state.cash} />
 
             <NewsFeed data={this.props.newsFeed} />
 

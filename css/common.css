@@ -1,9 +1,27 @@
-.stockNode {
-    width:16%;
+.stocks {
+    width:35%;
     float:left;
+}
+.stockNode {
+    margin:5px 0;
+    width:50%;
+    float:left;
+}
+.stockNode * {
+    margin:0 0 ;
+    padding:2px 0;
 }
 
 .cash {
     padding-top:30px;
-    clear:left;
+    font-size:1.4em;
+    font-weight:bold;
+
+}
+.cash, .price {
+    color:#090;
+}
+.newsFeed {
+    float:left;
+    width:50%;
 }
